@@ -1,17 +1,19 @@
 <?php
   require_once('db.class.php');
-  require_once('vendor/autoload.php');
+  require_once('vendor/autoload.php'); // PhpSpreadsheet
 
 
   $filename = "teste.xlsx";
   $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
   $spreadsheet = $reader->load($filename);
-
+  
   foreach ($spreadsheet->getWorksheetIterator() as $worksheet) {
-      $worksheets[$worksheet->getTitle()] = $worksheet->toArray();
+      $worksheets[$worksheet->getTitle()] = $worksheet->toArray(); // Array data
   }
 
   // print_r($worksheets);
+
+  // Link db
   $db = new db;
   $link = $db->connect_mysql();
   
@@ -25,12 +27,8 @@
         mysqli_query($link, $sql) or die("Erro ao efetuar o cadastro!");
         $c++;
       }
-      // var_dump($line);
-      // echo $l;
-      // echo "<br>";
       $l++;
     }
-
     next($worksheets);
   }
 
